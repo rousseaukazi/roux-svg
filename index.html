@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roux — Animated SVG</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #1a1a2e;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: -apple-system, sans-serif;
+    color: #fff;
+  }
+  h1 { margin-bottom: 32px; font-size: 1.4rem; opacity: 0.7; letter-spacing: 0.05em; }
+  .svg-wrap {
+    filter: drop-shadow(0 20px 60px rgba(0,0,0,0.5));
+  }
+  p { margin-top: 24px; font-size: 0.85rem; opacity: 0.4; }
+</style>
+</head>
+<body>
+  <h1>🫕 Roux — Animated SVG by Gemini 3.1 Pro</h1>
+  <div class="svg-wrap">
+<svg xmlns="http://www.w3.org/2000/svg" width="500" height="500" viewBox="0 0 500 500">
+  <defs>
+    <style>
+      @keyframes breathe {
+        0%, 100% { transform: translateY(0px) scaleY(1); }
+        50% { transform: translateY(-4px) scaleY(1.015); }
+      }
+      .breathing {
+        animation: breathe 4s ease-in-out infinite;
+        transform-origin: 250px 420px;
+      }
+
+      @keyframes sway {
+        0%, 100% { transform: rotate(-1.5deg); }
+        50% { transform: rotate(1.5deg); }
+      }
+      .tree {
+        animation: sway 7s ease-in-out infinite alternate;
+        transform-origin: 250px 500px;
+      }
+      .tree.delayed {
+        animation-delay: -3.5s;
+        animation-duration: 6s;
+      }
+      .bush {
+        animation: sway 9s ease-in-out infinite alternate;
+        transform-origin: 250px 450px;
+      }
+
+      @keyframes blink {
+        0%, 94%, 100% { transform: scaleY(1); }
+        97% { transform: scaleY(0.15); }
+      }
+      .eyeL { transform-origin: 195px 165px; animation: blink 3.8s infinite; }
+      .eyeR { transform-origin: 305px 165px; animation: blink 3.8s infinite; }
+
+      @keyframes sip {
+        0%, 100% { transform: rotate(0deg) translateY(0); }
+        30% { transform: rotate(1.5deg) translateY(-2px); }
+        60% { transform: rotate(0deg) translateY(0); }
+        80% { transform: rotate(0.8deg) translateY(-1px); }
+      }
+      .sip {
+        animation: sip 3.5s ease-in-out infinite;
+        transform-origin: 250px 223px;
+      }
+
+      @keyframes bubbleUp {
+        0% { transform: translateY(15px); opacity: 0; }
+        15% { opacity: 0.7; }
+        80% { opacity: 0.7; }
+        100% { transform: translateY(-90px); opacity: 0; }
+      }
+      .b1 { animation: bubbleUp 2s linear infinite; }
+      .b2 { animation: bubbleUp 2.4s linear infinite 0.9s; }
+      .b3 { animation: bubbleUp 1.7s linear infinite 1.4s; }
+      .b4 { animation: bubbleUp 2.2s linear infinite 0.4s; }
+    </style>
+
+    <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#bce3ed"/>
+      <stop offset="60%" stop-color="#e2f1f5"/>
+      <stop offset="100%" stop-color="#ffffff"/>
+    </linearGradient>
+
+    <filter id="wc" x="-20%" y="-20%" width="140%" height="140%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="3" result="noise" />
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="5" xChannelSelector="R" yChannelSelector="G" />
+      <feGaussianBlur stdDeviation="1.2" />
+    </filter>
+
+    <filter id="furryOutline" x="-30%" y="-30%" width="160%" height="160%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.07" numOctaves="3" result="noise" />
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="4" xChannelSelector="R" yChannelSelector="G" result="displaced" />
+      <feMorphology in="displaced" operator="dilate" radius="1.5" result="expanded" />
+      <feColorMatrix in="expanded" type="matrix" values="
+          0 0 0 0 0.29
+          0 0 0 0 0.17
+          0 0 0 0 0.10
+          0 0 0 1 0" result="outline" />
+      <feMerge>
+          <feMergeNode in="outline" />
+          <feMergeNode in="displaced" />
+      </feMerge>
+    </filter>
+
+    <clipPath id="circle-clip">
+      <circle cx="250" cy="250" r="240" />
+    </clipPath>
+
+    <clipPath id="juice-clip">
+      <rect x="-40" y="-55" width="80" height="110" rx="4"/>
+    </clipPath>
+  </defs>
+
+  <g clip-path="url(#circle-clip)">
+    <rect width="500" height="500" fill="url(#skyGrad)" />
+
+    <g filter="url(#wc)" opacity="0.7">
+      <path d="M 80 150 Q 120 130 160 160 Q 200 140 230 170 Q 150 180 80 150" fill="#ffffff" opacity="0.8"/>
+      <path d="M 320 130 Q 360 110 400 130 Q 430 120 460 150 Q 380 160 320 130" fill="#ffffff" opacity="0.6"/>
+    </g>
+
+    <path d="M 120 120 L 120 450" stroke="#a0cba5" stroke-width="28" stroke-linecap="round" class="tree" filter="url(#wc)" opacity="0.5"/>
+    <path d="M 380 150 L 380 450" stroke="#a0cba5" stroke-width="32" stroke-linecap="round" class="tree delayed" filter="url(#wc)" opacity="0.5"/>
+    <path d="M 60 90 L 60 450" stroke="#8cbda4" stroke-width="20" stroke-linecap="round" class="tree" filter="url(#wc)" opacity="0.3"/>
+    <path d="M 440 110 L 440 450" stroke="#8cbda4" stroke-width="22" stroke-linecap="round" class="tree delayed" filter="url(#wc)" opacity="0.4"/>
+
+    <ellipse cx="250" cy="450" rx="320" ry="90" fill="#d2edc9" filter="url(#wc)"/>
+
+    <g filter="url(#wc)" class="bush">
+      <circle cx="70" cy="320" r="80" fill="#aedaa1" opacity="0.85"/>
+      <circle cx="150" cy="370" r="65" fill="#8bc97a" opacity="0.85"/>
+      <circle cx="430" cy="300" r="90" fill="#aedaa1" opacity="0.85"/>
+      <circle cx="460" cy="390" r="75" fill="#8bc97a" opacity="0.85"/>
+      <circle cx="40" cy="420" r="85" fill="#78b866" opacity="0.85"/>
+      <circle cx="360" cy="400" r="65" fill="#78b866" opacity="0.85"/>
+    </g>
+
+    <path d="M 150 430 L 155 415 M 175 435 L 180 420 M 340 440 L 335 425 M 360 435 L 355 420" stroke="#78b866" stroke-width="2.5" stroke-linecap="round" opacity="0.7"/>
+
+    <ellipse cx="250" cy="435" rx="140" ry="25" fill="#9dbf86" opacity="0.6" filter="url(#wc)"/>
+
+    <g class="breathing">
+      <ellipse cx="130" cy="385" rx="55" ry="40" transform="rotate(20, 130, 385)" fill="#bf8052" filter="url(#furryOutline)"/>
+      <ellipse cx="370" cy="385" rx="55" ry="40" transform="rotate(-20, 370, 385)" fill="#bf8052" filter="url(#furryOutline)"/>
+
+      <ellipse cx="100" cy="385" rx="18" ry="24" transform="rotate(-35, 100, 385)" fill="#4a2c1b"/>
+      <circle cx="80" cy="365" r="6" fill="#4a2c1b"/>
+      <circle cx="98" cy="352" r="6" fill="#4a2c1b"/>
+      <circle cx="118" cy="358" r="6" fill="#4a2c1b"/>
+
+      <ellipse cx="400" cy="385" rx="18" ry="24" transform="rotate(35, 400, 385)" fill="#4a2c1b"/>
+      <circle cx="420" cy="365" r="6" fill="#4a2c1b"/>
+      <circle cx="402" cy="352" r="6" fill="#4a2c1b"/>
+      <circle cx="382" cy="358" r="6" fill="#4a2c1b"/>
+
+      <circle cx="380" cy="340" r="25" fill="#bf8052" filter="url(#furryOutline)"/>
+
+      <ellipse cx="250" cy="320" rx="110" ry="115" fill="#bf8052" filter="url(#furryOutline)"/>
+      <ellipse cx="250" cy="340" rx="65" ry="75" fill="#d49e75" opacity="0.5" filter="url(#wc)"/>
+
+      <path d="M 190 270 C 250 290, 250 290, 310 270 L 340 380 C 250 415, 250 415, 160 380 Z" fill="#284475" />
+      <path d="M 190 270 L 165 240 M 310 270 L 335 240" stroke="#284475" stroke-width="12" stroke-linecap="round"/>
+      <path d="M 330 355 Q 360 340 375 365 Q 360 380 340 365" fill="#284475" stroke="#1c3054" stroke-width="2"/>
+      <path d="M 170 355 Q 140 340 125 365 Q 140 380 160 365" fill="#284475" stroke="#1c3054" stroke-width="2"/>
+
+      <rect x="210" y="325" width="80" height="52" rx="6" fill="#d6e3f2"/>
+      <rect x="214" y="329" width="72" height="44" rx="4" fill="none" stroke="#9baac2" stroke-width="2" stroke-dasharray="5,3"/>
+      
+      <rect x="222" y="336" width="38" height="15" rx="2" fill="#ffffff" stroke="#9baac2" stroke-width="1"/>
+      <text x="241" y="347" font-family="Arial, Helvetica, sans-serif" font-weight="bold" font-size="10" fill="#333333" text-anchor="middle">SNACK</text>
+
+      <circle cx="165" cy="120" r="32" fill="#bf8052" filter="url(#furryOutline)"/>
+      <circle cx="335" cy="120" r="32" fill="#bf8052" filter="url(#furryOutline)"/>
+      <ellipse cx="165" cy="120" rx="16" ry="20" fill="#9c5f39"/>
+      <ellipse cx="335" cy="120" rx="16" ry="20" fill="#9c5f39"/>
+
+      <circle cx="160" cy="220" r="35" fill="#bf8052" filter="url(#furryOutline)"/>
+      <circle cx="340" cy="220" r="35" fill="#bf8052" filter="url(#furryOutline)"/>
+      <circle cx="250" cy="110" r="25" fill="#bf8052" filter="url(#furryOutline)"/>
+
+      <ellipse cx="250" cy="185" rx="105" ry="95" fill="#bf8052" filter="url(#furryOutline)"/>
+      
+      <path d="M 235 90 Q 250 75 255 90 Q 260 80 265 95" fill="none" stroke="#bf8052" stroke-width="5" stroke-linecap="round" filter="url(#wc)"/>
+
+      <ellipse cx="185" cy="205" rx="18" ry="12" fill="#e89292" opacity="0.6" transform="rotate(-12, 185, 205)"/>
+      <ellipse cx="315" cy="205" rx="18" ry="12" fill="#e89292" opacity="0.6" transform="rotate(12, 315, 205)"/>
+
+      <ellipse cx="250" cy="215" rx="42" ry="32" fill="#e8cbaa"/>
+      
+      <ellipse cx="250" cy="200" rx="15" ry="10" fill="#1a120d"/>
+      <ellipse cx="245" cy="197" rx="5" ry="3" fill="#ffffff" opacity="0.7" transform="rotate(-20, 245, 197)"/>
+
+      <path d="M 250 215 L 250 223" fill="none" stroke="#1a120d" stroke-width="3" stroke-linecap="round"/>
+      <path d="M 250 223 Q 235 235 220 220" fill="none" stroke="#1a120d" stroke-width="3" stroke-linecap="round"/>
+      <path d="M 250 223 Q 265 235 280 220" fill="none" stroke="#1a120d" stroke-width="3" stroke-linecap="round"/>
+
+      <g class="sip">
+        <path d="M 170 280 C 130 315, 140 370, 190 350 C 190 350, 180 320, 170 280 Z" fill="#bf8052" filter="url(#furryOutline)"/>
+        <path d="M 330 280 C 370 310, 360 360, 290 315 C 290 315, 320 290, 330 280 Z" fill="#bf8052" filter="url(#furryOutline)"/>
+
+        <g transform="translate(230, 315) rotate(12)">
+          <rect x="-45" y="-60" width="90" height="120" rx="8" fill="#82c365" stroke="#3a7824" stroke-width="4"/>
+          <rect x="-40" y="-55" width="80" height="110" rx="4" fill="#9ce37d"/>
+
+          <g clip-path="url(#juice-clip)">
+            <circle class="b1" cx="-20" cy="50" r="5" fill="#ffffff"/>
+            <circle class="b2" cx="15" cy="50" r="7" fill="#ffffff"/>
+            <circle class="b3" cx="-5" cy="50" r="3" fill="#ffffff"/>
+            <circle class="b4" cx="25" cy="50" r="4" fill="#ffffff"/>
+          </g>
+
+          <text x="0" y="-22" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-size="19" fill="#1b4d0e" text-anchor="middle" letter-spacing="0.5">JELLY</text>
+          <text x="0" y="-3" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-size="19" fill="#1b4d0e" text-anchor="middle" letter-spacing="0.5">JUICE</text>
+
+          <circle cx="-18" cy="28" r="14" fill="#b5eb96" stroke="#488c2f" stroke-width="2"/>
+          <path d="M -28 22 L -8 34 M -28 34 L -8 22 M -22 16 L -14 40 M -14 16 L -22 40" stroke="#488c2f" stroke-width="1.5" opacity="0.6"/>
+
+          <text x="4" y="24" font-family="Arial, sans-serif" font-weight="bold" font-size="12" fill="#1b4d0e">メロン</text>
+          
+          <rect x="2" y="32" width="34" height="12" rx="6" fill="#ffffff" stroke="#c04e4e" stroke-width="1.5"/>
+          <text x="19" y="41" font-family="Arial, sans-serif" font-size="8" fill="#c04e4e" text-anchor="middle" font-weight="bold">8v LI</text>
+
+          <rect x="-12" y="-72" width="24" height="12" rx="2" fill="#f4f4f4" stroke="#666666" stroke-width="2"/>
+          <rect x="-8" y="-80" width="16" height="4" fill="#e0e0e0" stroke="#666666" stroke-width="1.5"/>
+          <rect x="-8" y="-84" width="16" height="4" fill="#e0e0e0" stroke="#666666" stroke-width="1.5"/>
+          <rect x="-6" y="-95" width="12" height="11" fill="#ffffff" stroke="#666666" stroke-width="1.5"/>
+
+          <ellipse cx="-45" cy="15" rx="9" ry="14" transform="rotate(-20, -45, 15)" fill="#bf8052" filter="url(#furryOutline)"/>
+          <ellipse cx="42" cy="-10" rx="9" ry="14" transform="rotate(20, 42, -10)" fill="#bf8052" filter="url(#furryOutline)"/>
+        </g>
+      </g>
+
+      <path d="M 180 165 Q 195 145 210 165" fill="none" stroke="#1a120d" stroke-width="5" stroke-linecap="round" class="eyeL"/>
+      <path d="M 290 165 Q 305 145 320 165" fill="none" stroke="#1a120d" stroke-width="5" stroke-linecap="round" class="eyeR"/>
+
+      <circle cx="195" cy="165" r="34" fill="none" stroke="#2c1e13" stroke-width="4"/>
+      <circle cx="305" cy="165" r="34" fill="none" stroke="#2c1e13" stroke-width="4"/>
+      <path d="M 229 160 Q 250 152 271 160" fill="none" stroke="#2c1e13" stroke-width="4"/>
+      <path d="M 161 165 L 135 155" fill="none" stroke="#2c1e13" stroke-width="4" stroke-linecap="round"/>
+      <path d="M 339 165 L 365 155" fill="none" stroke="#2c1e13" stroke-width="4" stroke-linecap="round"/>
+
+      <path d="M 175 145 L 185 135 M 180 155 L 195 140" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" opacity="0.6"/>
+      <path d="M 285 145 L 295 135 M 290 155 L 305 140" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" opacity="0.6"/>
+    </g>
+
+  </g>
+  <circle cx="250" cy="250" r="240" fill="none" stroke="#ffffff" stroke-width="4" opacity="0.8"/>
+</svg>  </div>
+  <p>Generated by gemini-3.1-pro-preview</p>
+</body>
+</html>
